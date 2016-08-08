@@ -1,6 +1,6 @@
 {% if salt['pillar.get']('haproxy:jessie_backported') %}
 include:
-  - backports
+  - haproxy.backports
 {% endif %}
 
 
