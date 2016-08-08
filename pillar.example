@@ -4,6 +4,7 @@
 
 haproxy:
   enabled: True
+  overwrite: True # Overwrite an existing config file if present (default behaviour unless set to false)
   config_file_path: /etc/haproxy/haproxy.cfg
   global:
     stats:
@@ -103,6 +104,8 @@ haproxy:
           host: web2.example.com
           port: 18888
           check: check
+        web3:
+          host: web3.example.com
 
   frontends:
     frontend1:
@@ -125,6 +128,7 @@ haproxy:
         - url_static       path_end       -i .jpg .gif .png .css .js
       use_backends:
         - static-backend  if url_static
+      extra: "rspadd  Strict-Transport-Security:\ max-age=15768000"
     some-services:
       bind:
         - "*:8080"
@@ -137,6 +141,7 @@ haproxy:
       balance: roundrobin
       redirects: 
         - scheme https if !{ ssl_fc }
+      extra: "reqidel ^X-Forwarded-For:"
       servers:
         server1:
           name: server1-its-name
@@ -163,6 +168,8 @@ haproxy:
           host: 123.156.189.111
           port: 8080
           check: check
+        another-server:
+          host: 123.156.189.112
     api-backend:
       options:
         - http-server-close
