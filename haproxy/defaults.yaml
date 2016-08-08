@@ -1,0 +1,13 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+haproxy:
+  pkg: haproxy # This is not used for source installations, only binary distributions
+  configfile:
+    overwrite: True # Saltstack always overwrites the config by default
+    path: '/opt/haproxy/config/haproxy.yml' # This is not used for the source install
+  source: False # Install from source
+  repoVersion: "1.5" # Elastic repo version
+  sourceVersion: "1.6" # We need some version to not crash if nobody sets this
+  service:
+    name: haproxy # The package installs this as the service name by default, but source doesn't
+    enable: True
